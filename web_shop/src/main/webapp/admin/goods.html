@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <!-- 页面meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>商品管理</title>
+    <!-- Tell the browser to be responsive to screen width -->
+    <meta content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no" name="viewport">
+    <link rel="stylesheet" href="../plugins/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../plugins/adminLTE/css/AdminLTE.css">
+    <link rel="stylesheet" href="../plugins/adminLTE/css/skins/_all-skins.min.css">
+    <link rel="stylesheet" href="../css/style.css">
+	<link rel="stylesheet" href="../plugins/pageination/zpageNav.css">
+	<script src="../plugins/jQuery/jquery-2.2.3.min.js"></script>
+    <script src="../plugins/bootstrap/js/bootstrap.min.js"></script>
+ 
+</head>
+
+<body class="hold-transition skin-red sidebar-mini" >
+<div id="root">
+	<div class="box-header with-border" style="height: 64.5px;line-height: 54px;">
+		<h3 class="box-title">商品审核</h3>
+	</div>
+
+	<div class="box-body">
+
+		<!-- 数据表格 -->
+		<div class="table-box">
+
+			<!--工具栏-->
+			<div class="pull-left">
+				<div class="form-group form-inline">
+					<div class="btn-group">
+						<a type="button" class="btn btn-default" title="新建" href="goods_edit.html"><i class="fa fa-file-o"></i> 新建</a>
+						<button type="button" class="btn btn-default" title="删除" @click="goodsDelete()"><i class="fa fa-trash-o"></i> 删除</button>
+						<button type="button" class="btn btn-default" title="提交审核" @click="auditSub()"><i class="fa fa-check"></i> 提交审核</button>
+						<button type="button" class="btn btn-default" title="屏蔽" onclick='confirm("你确认要屏蔽吗？")'><i class="fa fa-ban"></i> 屏蔽</button>
+						<button type="button" class="btn btn-default" title="刷新" onclick="window.location.reload();"><i class="fa fa-refresh"></i> 刷新</button>
+					</div>
+				</div>
+			</div>
+			<div class="box-tools pull-right">
+				<div class="has-feedback">
+					状态：<select v-model="searchEntity.auditStatus">
+					<option value="">全部</option>
+					<option value="0">未申请</option>
+					<option value="1">申请中</option>
+					<option value="2">审核通过</option>
+					<option value="3">已驳回</option>
+				</select>
+					商品名称：<input v-model="searchEntity.goodsName">
+					<button class="btn btn-default" @click="pageHandler(1)">查询</button>
+				</div>
+			</div>
+			<!--工具栏/-->
+
+			<!--数据列表-->
+			<table id="dataList" class="table table-bordered table-striped table-hover dataTable">
+				<thead>
+				<tr>
+					<th class="" style="padding-right:0px">
+						<input id="selall" type="checkbox" class="icheckbox_square-blue" @click="selectAll($event)">
+					</th>
+					<th class="sorting_asc">商品ID</th>
+					<th class="sorting">商品名称</th>
+					<th class="sorting">商品价格</th>
+					<th class="sorting">一级分类</th>
+					<th class="sorting">二级分类</th>
+					<th class="sorting">三级分类</th>
+					<th class="sorting">状态</th>
+					<th class="text-center">操作</th>
+				</tr>
+				</thead>
+				<tbody>
+				<tr v-for="goodsItem in goodsList">
+					<td><input  type="checkbox" :checked="ischecked" @click="checkboxClick($event,goodsItem.id)"></td>
+					<td>{{goodsItem.id}}</td>
+					<td>{{goodsItem.goodsName}}</td>
+					<td>{{goodsItem.price}}</td>
+					<td>{{itemCatList[goodsItem.category1Id]}}</td>
+					<td>{{itemCatList[goodsItem.category2Id]}}</td>
+					<td>{{itemCatList[goodsItem.category3Id]}}</td>
+					<td>
+						<span>{{status[goodsItem.auditStatus]}}</span>
+					</td>
+					<td class="text-center">
+						<a class="btn bg-olive btn-xs" :href="'goods_edit.html?id='+goodsItem.id">修改</a>
+					</td>
+				</tr>
+				</tbody>
+			</table>
+			<!--数据列表/-->
+
+			<!--分页-->
+			<zpagenav v-bind:page="page" v-bind:page-size="pageSize" v-bind:total="total"
+					  v-bind:max-page="maxPage"  v-on:pagehandler="pageHandler">
+			</zpagenav>
+		</div>
+		<!-- 数据表格 /-->
+
+
+	</div>
+</div>
+
+<script type="text/javascript" src="../plugins/vue/vuejs-2.5.16.js"></script>
+<script type="text/javascript" src="../plugins/vue/axios-0.18.0.js"></script>
+<script type="text/javascript" src="../plugins/pageination/zpageNav.js"></script>
+<script type="text/javascript" src="../plugins/vue/qs.js"></script>
+<script>
+    new Vue({
+        el:"#root",
+        data:{
+            page: 1,  //显示的是哪一页
+            pageSize: 10, //每一页显示的数据条数
+            total: 0, //记录总数
+            maxPage:0,
+            searchEntity:{},
+            goodsList:[],
+            itemCatList:[],//所有分类信息(键值对形式存在)
+            status:{0:"未申请",1:"申请中",2:"审核通过",3:"已驳回"},
+
+            idList:[],//存放多炫框选中的id
+            ischecked:''//全选全不选判断
+        },
+        methods:{
+            pageHandler: function (page) {
+                var _this = this;
+                this.page = page;
+                axios.post("/goods/findPage.do?page="+this.page+"&pageSize="+this.pageSize,this.searchEntity)
+                    .then(function (response) {
+                        //取服务端响应的结果
+                        _this.goodsList = response.data.rows;
+                        _this.total = response.data.total;
+                        console.log(response);
+                    }).catch(function (reason) {
+                    console.log(reason);
+                })
+            },
+            loadCatData:function () {
+                var _this = this;
+                axios.post("/itemCat/findAll.do")
+                    .then(function (response) {
+                        //取服务端响应的结果
+                        for (var i = 0; i < response.data.length; i++){
+                            var category =  response.data[i];
+                            _this.itemCatList[category.id] = category.name;
+                        }
+                        console.log(_this.itemCatList);
+                        _this.pageHandler(1);
+                    }).catch(function (reason) {
+                    console.log(reason);
+                })
+            },
+            checkboxClick:function (event,id) {//多选框的点击
+                if(event.target.checked){
+                    this.idList.push(id);
+                }else {
+                    var index=this.idList.indexOf(id);
+                    this.idList.splice(index,1);
+                }
+                console.log(this.idList);
+            },
+            selectAll:function (event) {//全选全部选
+                var _this=this;
+                if(event.target.checked){
+                    this.ischecked='checked';
+                    this.idList=[];
+                    this.goodsList.forEach(function (e) {
+                        _this.idList.push(e.id);
+                    })
+                }else {
+                    this.ischecked='';
+                    this.idList=[];
+                }
+                console.log(this.idList);
+            },
+            goodsDelete:function () {
+                if (this.idList.length==0){
+                    alert("请选择要删除的商品");
+                    return;
+                }
+                var _this=this;
+                axios.post("/goods/goodsDelete.do",Qs.stringify({ids:this.idList},{indices:false})).then(function (response) {
+                    if (response.data.result) {
+                        alert(response.data.message);
+                        _this.ischecked='';
+                        _this.idList=[];
+                        _this.pageHandler(1);
+                    }else {
+                        alert(response.data.message)
+                    }
+                }).catch(function (reason) {
+                    console.log(reason);
+                })
+
+            },
+            auditSub:function () {
+                if (this.idList.length==0){
+                    alert("请选择要提交的商品");
+                    return;
+                }
+                var _this=this;
+                axios.post("/goods/auditSub.do",Qs.stringify({ids:this.idList},{indices:false})).then(function (response) {
+                    if (response.data.result) {
+                        alert(response.data.message);
+                        _this.ischecked='';
+                        _this.idList=[];
+                        _this.pageHandler(1);
+                    }else {
+                        alert(response.data.message)
+                    }
+                }).catch(function (reason) {
+                    console.log(reason);
+                })
+            }
+        },
+        created: function() {
+            this.loadCatData()
+        }
+    });
+</script>
+</body>
+
+</html>
