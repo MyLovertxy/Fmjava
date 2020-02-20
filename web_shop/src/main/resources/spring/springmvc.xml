@@ -39,7 +39,7 @@
     <!-- 给当前服务起个名 -->
     <dubbo:application name="fmjava-web_shop-web" />
     <!-- 配置连接zookeeper地址  -->
-    <dubbo:registry address="zookeeper://192.168.1.88:2181"/>
+    <dubbo:registry address="zookeeper://192.168.43.88:2181"/>
 <!--        <dubbo:registry address="zookeeper://10.13.16.88:2181"/>-->
 <!--        <dubbo:registry address="zookeeper://172.27.213.88:2181"/>-->
     <!-- 包扫描, 只有在这个包下面才可以用阿里的@Reference注解注入service -->
