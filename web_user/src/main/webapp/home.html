@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=9; IE=8; IE=7; IE=EDGE">
+    <meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7" />
+    <title>我的订单</title>
+    <link rel="icon" href="img/favicon.ico">
+    <link rel="stylesheet" type="text/css" href="css/base.css" />
+    <link rel="stylesheet" type="text/css" href="css/pages-seckillOrder.css" />
+</head>
+
+<body style="background: #f0f3ef;">
+<!--页面顶部-->
+<div id="nav-bottom" style="background: white; ">
+    <!--顶部-->
+    <div class="nav-top">
+        <div class="top">
+            <div class="py-container" >
+                <div class="shortcut">
+                    <ul class="fl">
+                        <li class="f-item">您好！</li>
+                        <li class="f-item">  请<a href="login.html" target="_blank" style="padding-left: 10px;">登录</a>　<span><a href="register.html" target="_blank">免费注册</a></span></li>
+                    </ul>
+                    <ul class="fr">
+                        <li class="f-item">我的订单</li>
+                        <li class="f-item space"></li>
+                        <li class="f-item">我的FM</li>
+                        <li class="f-item space"></li>
+                        <li class="f-item">FM会员</li>
+                        <li class="f-item space"></li>
+                        <li class="f-item">企业采购</li>
+                        <li class="f-item space"></li>
+                        <li class="f-item">客户服务</li>
+                        <li class="f-item space"></li>
+                        <li class="f-item">客户服务</li>
+                        <li class="f-item space"></li>
+                        <li class="f-item">网站导航</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <!--头部-->
+        <div class="header" style="height: 130px;">
+            <div class="py-container">
+                <div class="yui3-g Logo">
+                    <div class="yui3-u Left logoArea" style="padding-top: 30px; margin-left: 10px;">
+                        <img src="img/logo.png" width="60" height="60" alt="" style="float:left; margin-right: 10px;">
+                        <div style="font-size: 28px; color: #2b2b2b; margin-top: 18px;">FM商城</div>
+
+                    </div>
+
+                    <div class="yui3-u Center searchArea">
+                        <div class="search">
+                            <form action="" class="sui-form form-inline">
+                                <div class="input-append">
+                                    <input type="text" id="autocomplete" type="text" class="input-error input-xxlarge" />
+                                    <a class="sui-btn btn-xlarge btn-danger" href="search.html">搜索</a>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    <img src="img/gifgoods.gif" alt="" style="display: inline; position: absolute;right: 340px; top: 50px;">
+                </div>
+                <div class="yui3-g NavList" style="background: white; height: 40px;  margin-top: -20px;">
+                    <div class="yui3-u Center navArea">
+                        <ul class="nav">
+                            <li class="f-item" style=" font-size: 18px; margin-right: 90px;">我的FM</li>
+                            <li class="f-item">账户设置</li>
+                            <li class="f-item">消息</li>
+                            <li class="f-item">闪购</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="account">
+ <div class="py-container">
+            <div class="yui3-g home">
+                <!--左侧列表-->
+                <div class="yui3-u-1-6 list" style="background: white; margin-top: -10px;" >
+                    <div class="list-items" style="background: white;">
+                        <div class="menu">
+                            <dl class="fore1">
+                                <dt>订单中心</dt>
+                                <dd><a  href="#" target="_self">我的订单</a></dd>
+                                <dd><a  href="#" target="_self">评价晒单</a></dd>
+                            </dl>
+                            <dl class="fore1">
+                                <dt >我的钱包</dt>
+                                <dd><a >优惠券</a></dd>
+                                <dd><a href="#" target="_self">FM豆</a></dd>
+                                <dd><a href="#" target="_self">红包</a></dd>
+                                <dd><a href="#" target="_self">银行卡</a></dd>
+                                <dd><a href="#" target="_self">更多></a></dd>
+                            </dl>
+                            <dl class="fore1">
+                                <dt >我的关注</dt>
+                                <dd><a >关注商品</a></dd>
+                                <dd> <a href="#" target="_self">关注店铺</a></dd>
+                                <dd> <a href="#" target="_self">内容收藏</a></dd>
+                            </dl>
+                            <dl class="fore1">
+                                <dt >我的活动</dt>
+                                <dd><a >我的预约</a></dd>
+                                <dd> <a href="#" target="_self">我的拍卖</a></dd>
+                                <dd> <a href="#" target="_self">我的回收单</a></dd>
+                                <dd> <a href="#" target="_self">我的必购码</a></dd>
+                                <dd> <a href="#" target="_self">我的口令</a></dd>
+                                <dd> <a href="#" target="_self">更多></a></dd>
+                            </dl>
+                        </div>
+                    </div>
+                </div>
+                <!--右侧主内容-->
+                <div class="yui3-u-5-6 order-pay">
+
+                    <div class="box-0">
+                        <div class="m m-user plus-UNTRY">
+                            <div class="mc">
+                                <span class="rank">银牌</span>
+                                <a class="avatar" href="//i.jd.com/user/userinfo/showImg.html" clstag="homepage|keycount|infowallet_1530067239746|1"><img alt="GavinXq" class="lrc-image  img-loaded" title="" src="//i.jd.com/commons/img/no-img_mid_.jpg" /></a>
+                                <div class="user">
+                                    <a href="//i.jd.com/user/info" class="user-name" target="_blank" rel="noopener noreferrer" clstag="homepage|keycount|infowallet_1530067239746|3">GavinXq</a>
+                                </div>
+                                <div class="score">
+                                    <a class="score-vip" href="//vip.jd.com/" target="_blank" rel="noopener noreferrer" clstag="homepage|keycount|infowallet_1530067239746|5"><i class="icon-sprite"></i>京享值 4827</a>
+                                    <a class="score-bai" href="//credit.jd.com/?via=membercenter" target="_blank" rel="noopener noreferrer" clstag="homepage|keycount|infowallet_1530067239746|6">小白信用 86.2</a>
+                                </div>
+                            </div>
+                            <div class="mb">
+                                <div class="text">
+                                    <em>开通PLUS会员尊享</em>
+                                    <span>全年360元运费券礼包</span>
+                                </div>
+                                <a class="button" href="//plus.jd.com/index?flow_system=myhome&amp;flow_entrance=myhome1&amp;flow_channel=pc" target="_blank" rel="noopener noreferrer" clstag="homepage|keycount|infowallet_1530067239746|7">立即开通</a>
+                            </div>
+                        </div>
+                        <div class="m m-block m-wallet">
+                            <div class="mt" >
+                                <h3 style="font-size: 16px;color: #333; font-weight: normal; padding-top: 10px;">我的钱包</h3>
+                            </div>
+                            <div class="mc">
+                                <ul>
+                                    <li class="fore0">
+                                        <div class="num" clstag="homepage|keycount|infowallet_1530067239746|10">
+                                            <a href="//quan.jd.com/user_quan.action" target="_blank" rel="noopener noreferrer">0</a>
+                                        </div>
+                                        <div class="name">
+                                            优惠券
+                                        </div>
+                                        <div class="extra"></div>
+                                        <div class="operate" clstag="homepage|keycount|infowallet_1530067239746|11">
+                                            <a href="//a.jd.com" target="_blank" rel="noopener noreferrer">领券</a>
+                                        </div></li>
+                                    <li class="fore1" style="width: 130px; text-align: left;">
+                                        <div class="num" clstag="homepage|keycount|infowallet_1530067239746|12">
+                                            <a href="//bean.jd.com/myJingBean/list" target="_blank" rel="noopener noreferrer">377</a>
+                                        </div>
+                                        <div class="name">
+                                            京豆
+                                        </div>
+                                        <div class="extra"></div>
+                                        <div class="operate">
+                                            <a href="//bean.jd.com/myJingBean/list#earnBean" target="_blank" rel="noopener noreferrer" clstag="homepage|keycount|infowallet_1530067239746|13">赚京豆</a>
+                                            <span class="spacer"></span>
+                                            <a href="//bean.jd.com/myJingBean/list#expendBean" target="_blank" rel="noopener noreferrer" clstag="homepage|keycount|infowallet_1530067239746|14">花京豆</a>
+                                        </div></li>
+                                    <li class="fore2" style="width: 60px;">
+                                        <div class="num" clstag="homepage|keycount|infowallet_1530067239746|15">
+                                            <a href="//mymoney.jd.com/finance/recently.action" target="_blank" rel="noopener noreferrer">0.00</a>
+                                        </div>
+                                        <div class="name">
+                                            余额
+                                        </div>
+                                        <div class="extra"></div>
+                                        <div class="operate">
+                                            <a href="//mymoney.jd.com/recharge/chongzhi.action" target="_blank" rel="noopener noreferrer" clstag="homepage|keycount|infowallet_1530067239746|16">充值</a>
+                                        </div></li>
+                                    <li class="fore3" style="width: 150px;">
+                                        <div class="num" clstag="homepage|keycount|infowallet_1530067239746|18">
+                                            <a href="//baitiao.jd.com/v3/ious/list" target="_blank" rel="noopener noreferrer">0.00</a>
+                                        </div>
+                                        <div class="name">
+                                            白条本月待还
+                                        </div>
+                                        <div class="extra">
+                                            <a href="//baitiao.jd.com/v3/ious/list" target="_blank" rel="noopener noreferrer" clstag="homepage|keycount|infowallet_1530067239746|19">可用额度10000.00</a>
+                                        </div>
+                                        <div class="operate">
+                                            <a href="//baitiao.jd.com/v3/ious/list" target="_blank" rel="noopener noreferrer" clstag="homepage|keycount|infowallet_1530067239746|21">提现</a>
+                                        </div></li>
+                                    <li class="fore4" style="width: 150px;">
+                                        <div class="num" clstag="homepage|keycount|infowallet_1530067239746|23">
+                                            <a href="//jinku.jd.com/xjk/income.action" target="_blank" rel="noopener noreferrer">0.00</a>
+                                        </div>
+                                        <div class="name">
+                                            小金库昨日收益
+                                        </div>
+                                        <div class="extra" clstag="homepage|keycount|infowallet_1530067239746|24">
+                                            <a href="//jinku.jd.com/xjk/income.action" target="_blank" rel="noopener noreferrer">总额0.00</a>
+                                        </div>
+                                        <div class="operate">
+                                            <a href="//trade.jr.jd.com/pay/topayin.action" target="_blank" rel="noopener noreferrer" clstag="homepage|keycount|infowallet_1530067239746|25">转入小金库，马上赚钱</a>
+                                        </div></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="body" >
+                        <div class="table-title" style="background: white;">
+                            <table class="sui-table  order-table">
+                                <tr>
+                                    <thead>
+                                        <th width="35%">宝贝</th>
+                                        <th width="5%">单价</th>
+                                        <th width="5%">数量</th>
+                                        <th width="8%">商品操作</th>
+                                        <th width="10%">实付款</th>
+                                        <th width="10%">交易状态</th>
+                                        <th width="10%">交易操作</th>
+                                    </thead>
+                                </tr>
+                            </table>
+                        </div>
+                        <div class="order-detail" style="background: white;">
+                            <div class="orders">
+								<!--订单1-->
+                                <div class="choose-title">
+                                    <label data-toggle="checkbox" class="checkbox-pretty ">
+                                        <div>2019-08-11 13:59　订单编号：7867473872181848 </div>
+                                     </label>
+                                </div>
+                                <table class="sui-table table-bordered order-datatable">
+                                    <tbody>
+                                        <tr>
+                                            <td width="35%">
+                                                <div class="typographic">
+                                                    <img src="//img11.360buyimg.com/n7/jfs/t1/83118/1/488/217626/5ceb8ee6Edc08ec3c/d44fcf68cdedc317.jpg" width="82" height="82"/>
+                                                    <a href="#" class="block-text" style="margin-top: 5px;">Redmi K20Pro 骁龙855 索尼4800万超广角三摄 AMOLED弹出式全面屏 </a>
+                                                    <span class="guige" style="margin-top: 10px;">规格：8G+128G</span>
+                                                </div>
+                                            </td>
+                                            <td width="5%" class="center">
+                                                <ul class="unstyled">
+                                                    <li class="o-price">¥599.00</li>
+                                                    <li>¥299.00</li>
+                                                </ul>
+                                            </td>
+                                            <td width="5%" class="center">1</td>
+                                            <td width="8%" class="center"></td>
+                                            <td width="10%" class="center" >
+                                                <ul class="unstyled">
+                                                    <li>¥299.00</li>
+                                                    <li>（含运费：￥0.00）</li>
+                                                </ul>
+                                            </td>
+                                            <td width="10%" class="center">
+                                                <ul class="unstyled">
+                                                    <li>等待卖家付款</li>
+                                                    <li><a href="orderDetail.html" class="btn">订单详情 </a></li>
+                                                </ul>
+                                            </td>
+                                            <td width="10%" class="center">
+                                                <ul class="unstyled">
+													<li><a href="#" class="sui-btn btn-info">立即付款</a></li>
+                                                    <li>取消订单</li>
+                                                    
+                                                </ul>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <!--订单2-->
+                                <div class="choose-title">
+                                    <label data-toggle="checkbox" class="checkbox-pretty ">
+                                        <em>2019-08-11 13:59　订单编号：7867473872181848
+                                            <em style="margin-left: 20px;color: red">店铺：fmjava</em>
+                                        </em>
+                                     </label>
+                                </div>
+                                <table class="sui-table table-bordered order-datatable">
+                                    <tbody>
+                                        <tr>
+                                            <td width="35%">
+                                                <div class="typographic"><img src="//img12.360buyimg.com/n7/jfs/t1/70719/39/7817/212539/5d5a70caE631d4f16/38313b721cc6b750.jpg" width="82" height="82" />
+                                                    <a href="#" class="block-text">小米CC9 3200万美颜自拍 索尼4800万超清三摄 多功能NFC  </a>
+                                                    <span class="guige">规格：4030mAh 白色恋人</span>
+                                                </div>
+                                            </td>
+                                            <td width="5%" class="center">
+                                                <ul class="unstyled">
+                                                    <li class="o-price">¥2599.00</li>
+                                                    <li>¥1299.00</li>
+                                                </ul>
+                                            </td>
+                                            <td width="5%" class="center">1</td>
+                                            <td width="8%" class="center">
+                                                <ul class="unstyled">
+                                                    <li>已发货</li>
+                                                    <li><a>退货/退款</a></li>
+                                                </ul>
+                                            </td>
+                                            <td width="10%" class="center" rowspan="2">
+                                                <ul class="unstyled">
+                                                    <li>¥1299.00</li>
+                                                    <li>（含运费：￥0.00）</li>
+                                                </ul>
+                                            </td>
+                                            <td width="10%" class="center" rowspan="2">
+                                                <ul class="unstyled">
+                                                    <li>部分发货</li>
+                                                    <li><a href="orderDetail.html" class="btn">订单详情 </a></li>
+                                                </ul>
+                                            </td>
+                                            <td width="10%" class="center" rowspan="2">
+                                                <ul class="unstyled">
+                                                    <li>还剩4天23时</li>
+                                                    <li><a href="#" class="sui-btn btn-info">确认发货</a></li>
+                                                </ul>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td width="35%">
+                                                <div class="typographic"><img src="//img11.360buyimg.com/n7/jfs/t1/72198/36/2276/239240/5d091d9aEe5b1767d/2acea490f5b2c05d.jpg" width="82" height="82"/>
+                                                    <a href="#" class="block-text">小米 Air 2019款 12.5英寸全金属超轻薄(第八代英特尔酷睿M3-8100Y  </a>
+                                                    <span class="guige">规格：4G 128G</span>
+                                                </div>
+                                            </td>
+                                            <td width="5%" class="center">
+                                                <ul class="unstyled">
+                                                    <li class="o-price">¥4999.00</li>
+                                                    <li>¥4999.00</li>
+                                                </ul>
+                                            </td>
+                                            <td width="5%" class="center">1</td>
+                                            <td width="8%" class="center">
+                                                <ul class="unstyled">
+                                                    <li>未发货</li>
+                                                    <li><a>退货/退款</a></li>
+                                                </ul>
+                                            </td>
+                                        </tr>
+
+                                    </tbody>
+                                </table>
+
+
+                            </div>
+                            <div class="choose-order">
+                                <div class="sui-pagination pagination-large top-pages">
+                                    <ul>
+                                        <li class="prev disabled"><a href="#">«上一页</a></li>
+                                        <li class="active"><a href="#">1</a></li>
+                                        <li><a href="#">2</a></li>
+                                        <li><a href="#">3</a></li>
+                                        <li class="dotted"><span>...</span></li>
+                                        <li class="next"><a href="#">下一页»</a></li>
+                                    </ul>
+                                    <div><span>共10页&nbsp;</span><span>
+                                            到
+                                            <input type="text" class="page-num"><button class="page-confirm" onclick="alert(1)">确定</button>
+                                            页</span></div>
+                                </div>
+                            </div>
+
+                            <div class="clearfix"></div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+</div>
+<!--页面底部-->
+<div class="clearfix footer">
+    <div class="py-container">
+        <div class="footlink">
+            <div class="Mod-service">
+                <div class="mod_service" clstag="h|keycount|btm|btmnavi_null01">
+                    <div class="grid_c1 mod_service_inner">
+                        <ul class="mod_service_list">
+                            <li class="mod_service_item">
+                                <div class="mod_service_unit">
+                                    <h5 class="mod_service_tit mod_service_duo">多</h5>
+                                    <p class="mod_service_txt">品类齐全，轻松购物</p>
+                                </div></li>
+                            <li class="mod_service_item">
+                                <div class="mod_service_unit">
+                                    <h5 class="mod_service_tit mod_service_kuai">快</h5>
+                                    <p class="mod_service_txt">多仓直发，极速配送</p>
+                                </div></li>
+                            <li class="mod_service_item">
+                                <div class="mod_service_unit">
+                                    <h5 class="mod_service_tit mod_service_hao">好</h5>
+                                    <p class="mod_service_txt">正品行货，精致服务</p>
+                                </div></li>
+                            <li class="mod_service_item">
+                                <div class="mod_service_unit">
+                                    <h5 class="mod_service_tit mod_service_sheng">省</h5>
+                                    <p class="mod_service_txt">天天低价，畅选无忧</p>
+                                </div></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="clearfix Mod-list">
+                <div class="yui3-g">
+                    <div class="yui3-u-1-6">
+                        <h5 style="font-size: 15px;">购物指南</h5>
+                        <ul class="unstyled">
+                            <li>购物流程</li>
+                            <li>会员介绍</li>
+                            <li>生活旅行/团购</li>
+                            <li>常见问题</li>
+                            <li>购物指南</li>
+                        </ul>
+                    </div>
+                    <div class="yui3-u-1-6">
+                        <h5 style="font-size: 15px;">配送方式</h5>
+                        <ul class="unstyled">
+                            <li>上门自提</li>
+                            <li>211限时达</li>
+                            <li>配送服务查询</li>
+                            <li>配送费收取标准</li>
+                            <li>海外配送</li>
+                        </ul>
+                    </div>
+                    <div class="yui3-u-1-6">
+                        <h5 style="font-size: 15px;">支付方式</h5>
+                        <ul class="unstyled">
+                            <li>货到付款</li>
+                            <li>在线支付</li>
+                            <li>分期付款</li>
+                            <li>邮局汇款</li>
+                            <li>公司转账</li>
+                        </ul>
+                    </div>
+                    <div class="yui3-u-1-6">
+                        <h5 style="font-size: 15px;">售后服务</h5>
+                        <ul class="unstyled">
+                            <li>售后政策</li>
+                            <li>价格保护</li>
+                            <li>退款说明</li>
+                            <li>返修/退换货</li>
+                            <li>取消订单</li>
+                        </ul>
+                    </div>
+                    <div class="yui3-u-1-6">
+                        <h5 style="font-size: 15px;">特色服务</h5>
+                        <ul class="unstyled">
+                            <li>夺宝岛</li>
+                            <li>DIY装机</li>
+                            <li>延保服务</li>
+                        </ul>
+                    </div>
+                    <div class="yui3-u-1-6">
+                        <div class="mod_help_cover">
+                            <h5 class="mod_help_cover_tit">自营覆盖区县</h5>
+                            <div class="mod_help_cover_con">
+                                <p class="mod_help_cover_info">已向全国2661个区县提供自营配送服务，支持货到付款、POS机刷卡和售后上门服务。</p>
+                                <p class="mod_help_cover_more">
+                                    <a href="//help.jd.com/user/issue/103-983.html" target="_blank">查看详情
+                                    </a>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="Mod-copyright">
+                <ul class="helpLink">
+                    <li>关于我们<span class="space"></span></li>
+                    <li>联系我们<span class="space"></span></li>
+                    <li>联系客服<span class="space"></span></li>
+                    <li>合作招商<span class="space"></span></li>
+                    <li>商家帮助<span class="space"></span></li>
+                    <li>营销中心<span class="space"></span></li>
+                    <li>友情链接<span class="space"></span></li>
+                    <li>销售联盟<span class="space"></span></li>
+                    <li>友情链接<span class="space"></span></li>
+                    <li>隐私政策</li>
+                </ul>
+                <p>京公网安备 1****002000088号|京ICP证0*****9号|互联网药品信息服务资格证编号(京)-经营性-2014-0008|新出发京零 字第大1*****2号</p>
+                <p>京ICP备0*****1号京公网安备1***********2</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+</body>
+</html>

@@ -21,6 +21,7 @@
         <module>service_search</module>
         <module>service_page</module>
         <module>web_user</module>
+        <module>service_user</module>
     </modules>
     <!-- 集中定义依赖版本号 -->
     <properties>

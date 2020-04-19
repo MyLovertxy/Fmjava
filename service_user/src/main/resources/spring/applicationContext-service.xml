@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+
+       xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://code.alibabatech.com/schema/dubbo http://code.alibabatech.com/schema/dubbo/dubbo.xsd">
+
+    <!-- 配置dubbo对外提供服务的端口号-->
+    <dubbo:protocol name="dubbo" port="20888"></dubbo:protocol>
+    <!-- 给当前服务起个名 -->
+    <dubbo:application name="fmstore-user-service"/>
+
+    <!-- 配置包扫描, 在这个包下面的service实现类上写@service注解才会生效  -->
+    <dubbo:annotation package="com.fmjava.core.service" />
+    <!-- 超时全局设置   10分钟   check=false不检查服务提供方-->
+    <dubbo:consumer timeout="600000" check="false"/>
+
+</beans>

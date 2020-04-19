@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=9; IE=8; IE=7; IE=EDGE">
+	<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7" />
+	<title>个人注册</title>
+	<link rel="icon" href="img/favicon.ico">
+	<link rel="stylesheet" type="text/css" href="css/webbase.css" />
+	<link rel="stylesheet" type="text/css" href="css/pages-register.css" />
+</head>
+
+
+<body>
+
+<div id="app">
+	<div class="register py-container ">
+		<div style="height: 90px; padding-top: 10px;">
+			<img src="img/logo.png" alt="" width="80" height="80" style="float:left; ">
+			<div class="manage-title" style="color: dimgrey; font-size: 25px; margin-top: 30px;">用户注册</div>
+		</div>
+
+		<div class="registerArea">
+			<h3>注册新用户<span class="go">我有账号，去<a href="login.html" target="_blank">登陆</a></span></h3>
+			<div class="info">
+				<form class="sui-form form-horizontal">
+					<div class="control-group">
+						<label class="control-label">用户名：</label>
+						<div class="controls">
+							<input type="text" placeholder="请输入你的用户名" v-model="userEntity.username" class="input-xfat input-xlarge">
+						</div>
+					</div>
+					<div class="control-group">
+						<label  class="control-label">登录密码：</label>
+						<div class="controls">
+							<input type="password" placeholder="设置登录密码" v-model="userEntity.password" class="input-xfat input-xlarge">
+						</div>
+					</div>
+					<div class="control-group">
+						<label class="control-label">确认密码：</label>
+						<div class="controls">
+							<input type="password" placeholder="再次确认密码" v-model="password2" class="input-xfat input-xlarge">
+						</div>
+					</div>
+
+					<div class="control-group">
+						<label class="control-label">手机号：</label>
+						<div class="controls">
+							<input type="text" placeholder="请输入你的手机号" v-model="userEntity.phone" class="input-xfat input-xlarge">
+						</div>
+					</div>
+					<div class="control-group">
+						<label class="control-label">短信验证码：</label>
+						<div class="controls">
+							<input type="text" placeholder="短信验证码" v-model="userEntity.smscode" class="input-xfat input-xlarge">
+							<a href="#" @click="sendCode()">获取短信验证码</a>
+						</div>
+					</div>
+
+
+					<div class="control-group">
+						<label class="control-label"></label>
+						<div class="controls btn-reg">
+							<a class="sui-btn btn-block btn-xlarge btn-danger"
+							   href="#"
+							   target="_blank"
+							   @click="regist()"
+							>完成注册</a>
+						</div>
+					</div>
+				</form>
+				<div class="clearfix"></div>
+			</div>
+		</div>
+
+		<div class="py-container copyright">
+			<ul class="helpLink">
+				<li>关于我们<span class="space"></span></li>
+				<li>联系我们<span class="space"></span></li>
+				<li>联系客服<span class="space"></span></li>
+				<li>合作招商<span class="space"></span></li>
+				<li>商家帮助<span class="space"></span></li>
+				<li>营销中心<span class="space"></span></li>
+				<li>友情链接<span class="space"></span></li>
+				<li>销售联盟<span class="space"></span></li>
+				<li>友情链接<span class="space"></span></li>
+				<li>隐私政策</li>
+			</ul>
+			<p>京公网安备 1****002000088号|京ICP证0*****9号|互联网药品信息服务资格证编号(京)-经营性-2014-0008 字第大1*****2号</p>
+			<p>京ICP备0*****1号京公网安备1***********2</p>
+		</div>
+	</div>
+</div>
+
+<script type="text/javascript" src="plugins/jQuery/jquery-2.2.3.min.js"></script>
+<script type="text/javascript" src="plugins/vue/vuejs-2.5.16.js"></script>
+<script type="text/javascript" src="plugins/vue/axios-0.18.0.js"></script>
+<script type="text/javascript" src="plugins/vue/qs.js"></script>
+
+</body>
+
+<script>
+	new Vue({
+		el:"#app",
+		data:{
+			userEntity:{
+				username:'',
+				password:'',
+				phone:'',
+				smscode:''
+			},
+			password2:''
+		},
+		methods:{
+			sendCode:function () {
+				if(this.userEntity.phone==null || this.userEntity.phone==""){
+					alert("请填写手机号码");
+					return ;
+				}
+				axios.get('/user/sendCode.do?phone='+this.userEntity.phone)
+						.then(function (response) {
+							//获取服务端响应的结果
+							console.log(response.data);
+							alert(response.data.message);
+						}).catch(function (reason) {
+					console.log(reason);
+				});
+			},
+			regist:function () {
+				if(this.userEntity.phone==null || this.userEntity.phone==""){
+					alert("请填写手机号码");
+					return ;
+				}
+				//比较两次输入的密码是否一致
+				if(this.userEntity.password!=this.password2){
+					alert("两次输入密码不一致，请重新输入");
+					this.userEntity.password="";
+					this.password2="";
+					return ;
+				}
+
+				axios.post('/user/add.do?smscode='+this.userEntity.smscode,this.userEntity)
+						.then(function (response) {
+							//获取服务端响应的结果
+							console.log(response.data);
+							if (response.data.success){
+								location.href="login.html";
+							} else {
+								alert(response.data.message);
+							}
+						}).catch(function (reason) {
+					console.log(reason);
+				});
+			}
+		},
+		created: function() {
+
+		}
+	});
+</script>
+
+</html>
