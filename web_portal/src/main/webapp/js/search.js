@@ -116,6 +116,9 @@ new Vue({
             }else {
                 return false;
             }
+        },
+        openDetailPage:function(id){
+            window.open("http://localhost:8086/"+id+".html");
         }
     },
     watch: { //监听属性的变化

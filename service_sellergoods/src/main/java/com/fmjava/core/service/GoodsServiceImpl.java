@@ -162,6 +162,9 @@ public class GoodsServiceImpl implements GoodsService {
                 goods.setId(id);
                 goods.setAuditStatus(status);
                 goodsDao.updateByPrimaryKeySelective(goods);
+
+                //修改item表状态
+                itemDao.updateStatusByGoodsId(id,status);
             }
         }
     }
@@ -172,7 +175,8 @@ public class GoodsServiceImpl implements GoodsService {
         ItemQuery.Criteria criteria = itemQuery.createCriteria();
         criteria.andStatusEqualTo(status);
         criteria.andGoodsIdIn(Arrays.asList(ids));
-        return itemDao.selectByExample(itemQuery);
+        List<Item> items = itemDao.selectByExample(itemQuery);
+        return items;
     }
 
     /**

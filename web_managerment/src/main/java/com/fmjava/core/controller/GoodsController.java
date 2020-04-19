@@ -7,6 +7,7 @@ import com.fmjava.core.pojo.entity.PageResult;
 import com.fmjava.core.pojo.entity.Result;
 import com.fmjava.core.pojo.good.Goods;
 import com.fmjava.core.pojo.item.Item;
+import com.fmjava.core.service.CmsService;
 import com.fmjava.core.service.GoodsService;
 import com.fmjava.core.service.SolrManagerService;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/goods")
@@ -26,6 +28,9 @@ public class GoodsController {
 
     @Reference
     private SolrManagerService managerService;
+
+    @Reference
+    private CmsService cmsService;
     /*删除商品*/
     @RequestMapping("/goodsDelete")
     public Result goodsDelete(Long[] ids) {
@@ -67,5 +72,22 @@ public class GoodsController {
     @RequestMapping("/findOne")
     public GoodsEntity findOne(Long id) {
         return goodsService.findOne(id);
+    }
+
+
+    /**
+     * 测试生成静态页面
+     * @param goodsId   商品id
+     * @return
+     */
+    @RequestMapping("/testPage")
+    public Boolean testCreatePage(Long goodsId) {
+        try {
+            cmsService.createStaticPage(goodsId);
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
     }
 }

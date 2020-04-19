@@ -497,4 +497,9 @@
       seller = #{seller,jdbcType=VARCHAR}
     where id = #{id,jdbcType=BIGINT}
   </update>
+    <update id="updateStatusByGoodsId">
+        update tb_item t
+        set t.status=#{status}
+        where t.goods_id=#{id}
+    </update>
 </mapper>

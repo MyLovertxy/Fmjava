@@ -28,4 +28,6 @@ public interface ItemDao {
     int updateByPrimaryKeySelective(Item record);
 
     int updateByPrimaryKey(Item record);
+
+    void updateStatusByGoodsId(@Param("id") Long id, @Param("status") String status);
 }
