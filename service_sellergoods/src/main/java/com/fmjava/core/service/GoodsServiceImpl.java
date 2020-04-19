@@ -2,6 +2,7 @@ package com.fmjava.core.service;
 
 import com.alibaba.dubbo.config.annotation.Service;
 import com.alibaba.fastjson.JSON;
+import com.fmjava.consts.ResComConsts;
 import com.fmjava.consts.ResComConsts.*;
 import com.fmjava.core.dao.good.BrandDao;
 import com.fmjava.core.dao.good.GoodsDao;
@@ -21,9 +22,14 @@ import com.fmjava.core.pojo.item.ItemQuery;
 import com.fmjava.core.pojo.seller.Seller;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
+import org.apache.activemq.command.ActiveMQQueue;
+import org.apache.activemq.command.ActiveMQTopic;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jms.core.JmsTemplate;
+import org.springframework.jms.core.MessageCreator;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.jms.*;
 import java.math.BigDecimal;
 import java.util.*;
 
@@ -43,6 +49,15 @@ public class GoodsServiceImpl implements GoodsService {
     private BrandDao brandDao;
     @Autowired
     private SellerDao sellerDao;
+
+    @Autowired
+    private JmsTemplate jmsTemplate;
+    //为商品上架使用
+    @Autowired
+    private ActiveMQTopic topicPageAndSolrDestination;
+    //为商品下架使用
+    @Autowired
+    private ActiveMQQueue queueSolrDeleteDestination;
 
     @Override
     public void addGoods(GoodsEntity goodsEntity) {
@@ -127,7 +142,7 @@ public class GoodsServiceImpl implements GoodsService {
     public void goodsDelete(Long[] ids) {
         if (ids != null) {
             ItemQuery query = new ItemQuery();
-            for (Long id : ids) {
+            for (final Long id : ids) {
                 Goods goods = new Goods();
                 goods.setId(id);
                 goods.setIsDelete(IsDelete.ISDElEtE_Y);
@@ -137,6 +152,14 @@ public class GoodsServiceImpl implements GoodsService {
                 ItemQuery.Criteria criteria = query.createCriteria();
                 criteria.andGoodsIdEqualTo(id);
                 itemDao.updateByExampleSelective(item, query);
+
+                jmsTemplate.send(queueSolrDeleteDestination, new MessageCreator() {
+                    @Override
+                    public Message createMessage(Session session) throws JMSException {
+                        TextMessage textMessage = session.createTextMessage(String.valueOf(id));
+                        return textMessage;
+                    }
+                });
             }
         }
     }
@@ -154,7 +177,7 @@ public class GoodsServiceImpl implements GoodsService {
     }
 
     @Override
-    public void updateStatus(Long[] ids, String status) {
+    public void updateStatus(final Long[] ids, String status) {
         if (ids != null) {
             for (Long id : ids) {
                 //1. 根据商品id修改商品对象状态码
@@ -165,6 +188,18 @@ public class GoodsServiceImpl implements GoodsService {
 
                 //修改item表状态
                 itemDao.updateStatusByGoodsId(id,status);
+            }
+            if (AuditState.AUDIT_STATE_2.equals(status)){
+                //更新索引库
+                //生成静态页面
+
+                jmsTemplate.send(topicPageAndSolrDestination, new MessageCreator() {
+                    @Override
+                    public Message createMessage(Session session) throws JMSException {
+                        ObjectMessage objectMessage = session.createObjectMessage(ids);
+                        return objectMessage;
+                    }
+                });
             }
         }
     }
