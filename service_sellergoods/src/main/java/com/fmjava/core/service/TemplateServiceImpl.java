@@ -2,6 +2,8 @@ package com.fmjava.core.service;
 
 import com.alibaba.dubbo.config.annotation.Service;
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
+import com.fmjava.consts.ResComConsts;
 import com.fmjava.core.dao.specification.SpecificationOptionDao;
 import com.fmjava.core.dao.template.TypeTemplateDao;
 import com.fmjava.core.pojo.entity.PageResult;
@@ -13,10 +15,14 @@ import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import org.apache.zookeeper.data.Id;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
 
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
+
+import static com.fmjava.consts.ResComConsts.BRAND_LIST_REDIS;
+import static com.fmjava.consts.ResComConsts.SPEC_LIST_REDIS;
 
 @Service
 public class TemplateServiceImpl implements TemplateService{
@@ -26,8 +32,28 @@ public class TemplateServiceImpl implements TemplateService{
     @Autowired
     private SpecificationOptionDao specificationOptionDao;
 
+    @Autowired
+    private RedisTemplate redisTemplate;
+
     @Override
     public PageResult findPage(Integer page, Integer pageSize, TypeTemplate template) {
+        //缓存品牌和规格
+        if (! redisTemplate.hasKey(BRAND_LIST_REDIS )|| !redisTemplate.hasKey(SPEC_LIST_REDIS)){
+            List<TypeTemplate> typeTemplates = templateDao.selectByExample(null);
+            for (TypeTemplate typeTemplate : typeTemplates) {
+
+                //缓存品牌
+                String brandIds = typeTemplate.getBrandIds();
+                List<Map> maps = JSON.parseArray(brandIds, Map.class);
+                redisTemplate.boundHashOps(BRAND_LIST_REDIS).put(typeTemplate.getId(),maps);
+
+                //缓存规格
+                List<Map> specListBytempId = this.findSpecListBytempId(typeTemplate.getId());
+                redisTemplate.boundHashOps(SPEC_LIST_REDIS).put(typeTemplate.getId(),specListBytempId);
+            }
+        }
+
+
         //分页进行查询
         PageHelper.startPage(page,pageSize);
         TypeTemplateQuery query = new TypeTemplateQuery();

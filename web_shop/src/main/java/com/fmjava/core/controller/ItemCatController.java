@@ -73,6 +73,7 @@ public class ItemCatController {
     /*查询所有*/
     @RequestMapping("/findAll")
     public List<ItemCat> findAll(){
-        return catService.findAll();
+        List<ItemCat> all = catService.findAll();
+        return all;
     }
 }

@@ -25,10 +25,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
-import java.util.Collection;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Service
 @Transactional
@@ -167,6 +164,15 @@ public class GoodsServiceImpl implements GoodsService {
                 goodsDao.updateByPrimaryKeySelective(goods);
             }
         }
+    }
+
+    @Override
+    public List<Item> findItemByGoodsIdAndState(Long[] ids, String status) {
+        ItemQuery itemQuery = new ItemQuery();
+        ItemQuery.Criteria criteria = itemQuery.createCriteria();
+        criteria.andStatusEqualTo(status);
+        criteria.andGoodsIdIn(Arrays.asList(ids));
+        return itemDao.selectByExample(itemQuery);
     }
 
     /**

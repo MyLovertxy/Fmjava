@@ -3,6 +3,9 @@ package com.fmjava.core.service;
 import com.fmjava.core.pojo.entity.GoodsEntity;
 import com.fmjava.core.pojo.entity.PageResult;
 import com.fmjava.core.pojo.good.Goods;
+import com.fmjava.core.pojo.item.Item;
+
+import java.util.List;
 
 public interface GoodsService {
     /**
@@ -50,4 +53,10 @@ public interface GoodsService {
      * @param ids
      */
     void updateStatus(Long[] ids,String status);
+
+    /**
+     * 根据goodsid和审核状态查询
+     * @param ids
+     */
+    List<Item> findItemByGoodsIdAndState (Long[] ids ,String status);
 }

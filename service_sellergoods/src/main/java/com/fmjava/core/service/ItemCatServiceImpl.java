@@ -1,6 +1,7 @@
 package com.fmjava.core.service;
 
 import com.alibaba.dubbo.config.annotation.Service;
+import com.fmjava.consts.ResComConsts;
 import com.fmjava.core.dao.item.ItemCatDao;
 import com.fmjava.core.pojo.entity.PageResult;
 import com.fmjava.core.pojo.item.ItemCat;
@@ -8,13 +9,21 @@ import com.fmjava.core.pojo.item.ItemCatQuery;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
 
 import java.util.Arrays;
 import java.util.List;
+
+import static com.fmjava.consts.ResComConsts.CATEGORY_LIST_REDIS;
+
 @Service
 public class ItemCatServiceImpl implements ItemCatService{
     @Autowired
     private ItemCatDao catDao;
+
+    @Autowired
+    private RedisTemplate redisTemplate;
+
     @Override
     public PageResult findPage(Integer page, Integer pageSize, Long parentId, ItemCat itemCat) {
         //分页进行查询
@@ -34,6 +43,16 @@ public class ItemCatServiceImpl implements ItemCatService{
 
     @Override
     public List<ItemCat> findByParentId(Long parentId) {
+        //缓存数据
+        if (!redisTemplate.hasKey(CATEGORY_LIST_REDIS)){
+            List<ItemCat> itemCatsAll = catDao.selectByExample(null);
+            for (ItemCat itemCat : itemCatsAll) {
+                redisTemplate.boundHashOps(CATEGORY_LIST_REDIS).put(itemCat.getName(),itemCat.getTypeId());
+            }
+        }
+
+
+
         ItemCatQuery query = new ItemCatQuery();
         ItemCatQuery.Criteria criteria = query.createCriteria();
         criteria.andParentIdEqualTo(parentId);

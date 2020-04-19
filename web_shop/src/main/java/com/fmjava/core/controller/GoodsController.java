@@ -7,10 +7,13 @@ import com.fmjava.core.pojo.entity.PageResult;
 import com.fmjava.core.pojo.entity.Result;
 import com.fmjava.core.pojo.good.Goods;
 import com.fmjava.core.service.GoodsService;
+import com.fmjava.core.service.SolrManagerService;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.Arrays;
 
 @RestController
 @RequestMapping("/goods")
@@ -18,6 +21,9 @@ public class GoodsController {
 
     @Reference
     private GoodsService goodsService;
+
+    @Reference
+    private SolrManagerService managerService;
 
     @RequestMapping("/addGoods")
     public Result addGoods(@RequestBody GoodsEntity goodsEntity){
@@ -53,6 +59,7 @@ public class GoodsController {
     public Result goodsDelete(Long[] ids) {
         try {
             goodsService.goodsDelete(ids);
+            managerService.deleteItemByGoodsId(Arrays.asList(ids));
             return  new Result(true, "删除成功!");
         } catch (Exception e) {
             e.printStackTrace();
